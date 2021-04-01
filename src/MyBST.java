@@ -78,7 +78,25 @@ public class MyBST implements BST_Methods{
 
     @Override
     public int getItemDepth(int item) {
-        return 0;
+        return getItemDepth(item, rootNode, 1);
+    }
+
+    private int getItemDepth(int item, MyNode myNode, int depth) {
+
+        if (myNode == null)
+            return 0;
+
+        if (myNode.getItem() == item)
+            return depth;
+
+        int currentLevel = getItemDepth(item, myNode.getLeftNode(), depth + 1);
+
+        if(currentLevel != 0)
+            return currentLevel;
+
+        currentLevel = getItemDepth(item, myNode.getRightNode(), depth+1);
+
+        return currentLevel;
     }
 
     @Override
