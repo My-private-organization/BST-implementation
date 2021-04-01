@@ -13,7 +13,7 @@ public class BST_Offline {
         myBST.insertItem(4);
         myBST.insertItem(13);
 
-        System.out.println(myBST.searchItem(13));
+        System.out.println(myBST.getHeight());
 
     }
 }

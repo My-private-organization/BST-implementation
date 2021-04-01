@@ -5,7 +5,6 @@ public class MyBST implements BST_Methods{
     @Override
     public void insertItem(int item)
     {
-
         MyNode myNode = new MyNode();
         myNode.setItem(item);
 
@@ -34,13 +33,13 @@ public class MyBST implements BST_Methods{
             if(myNode.getItem() < parentNode.getItem())
             {
                 parentNode.setLeftNode(myNode);
-                myNode.setParentNode(parentNode);
             }
             else
             {
                 parentNode.setRightNode(myNode);
-                myNode.setParentNode(parentNode);
             }
+
+            myNode.setParentNode(parentNode);
         }
     }
 
@@ -84,17 +83,56 @@ public class MyBST implements BST_Methods{
 
     @Override
     public int getMaxItem() {
-        return 0;
+        return getMaxItem(rootNode);
+    }
+
+    private int getMaxItem(MyNode rootNode) {
+
+        MyNode currentNode = rootNode;
+
+        while (currentNode.getRightNode() != null) {
+            currentNode = currentNode.getRightNode();
+        }
+
+        return (currentNode.getItem());
     }
 
     @Override
     public int getMinItem() {
-        return 0;
+        return getMinItem(rootNode);
+    }
+
+    private int getMinItem(MyNode rootNode) {
+
+        MyNode currentNode = rootNode;
+
+        while (currentNode.getLeftNode() != null) {
+            currentNode = currentNode.getLeftNode();
+        }
+
+        return (currentNode.getItem());
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return getHeight(rootNode);
+    }
+
+    private int getHeight(MyNode myNode)
+    {
+        if (myNode == null)
+            return 0;
+
+        else
+        {
+            int leftSide = getHeight(myNode.getLeftNode());
+            int rightSide = getHeight(myNode.getRightNode());
+
+            if (leftSide > rightSide)
+                return leftSide + 1;
+            else
+                return rightSide + 1;
+        }
     }
 
     @Override
@@ -104,7 +142,6 @@ public class MyBST implements BST_Methods{
 
     private void printInOrder(MyNode myNode)
     {
-
         if (myNode == null)
             return;
 
@@ -122,6 +159,7 @@ public class MyBST implements BST_Methods{
     {
         if (myNode == null)
             return;
+
         System.out.print(myNode.getItem() + " ");
         printPreOrder(myNode.getLeftNode());
         printPreOrder(myNode.getRightNode());
@@ -143,7 +181,18 @@ public class MyBST implements BST_Methods{
     }
 
     @Override
-    public int getSize() {
-        return 0;
+    public int getSize()
+    {
+        return getSize(rootNode);
+    }
+
+    private int getSize(MyNode myNode)
+    {
+        if(myNode == null){
+            return 0;
+        }
+        else{
+            return 1 + getSize(myNode.getLeftNode()) + getSize(myNode.getRightNode());
+        }
     }
 }
