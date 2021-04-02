@@ -282,6 +282,7 @@ public class MyBST implements BST_Methods{
     @Override
     public void printInOrder() {
         printInOrder(rootNode);
+        System.out.println();
     }
 
     private void printInOrder(MyNode myNode)
@@ -297,6 +298,7 @@ public class MyBST implements BST_Methods{
     @Override
     public void printPreOrder() {
         printPreOrder(rootNode);
+        System.out.println();
     }
 
     private void printPreOrder(MyNode myNode)
@@ -312,6 +314,7 @@ public class MyBST implements BST_Methods{
     @Override
     public void printPostOrder() {
         printPostOrder(rootNode);
+        System.out.println();
     }
 
     private void printPostOrder(MyNode myNode)
