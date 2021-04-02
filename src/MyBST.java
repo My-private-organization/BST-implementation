@@ -166,25 +166,38 @@ public class MyBST implements BST_Methods{
 
     private MyNode deleteItem(MyNode myNode, int item)
     {
-        if (myNode == null)
-            return myNode;
+        if(myNode == null)
+            return null;
 
-        if (item < myNode.getItem())
+        if(myNode.getItem() < item)
+            myNode.setRightNode(deleteItem(myNode.getRightNode(), item));
+
+        else if(myNode.getItem() > item)
             myNode.setLeftNode(deleteItem(myNode.getLeftNode(), item));
 
-        else if (item > myNode.getItem())
-            myNode.setRightNode(deleteItem(myNode.getRightNode(), item));
+        else
+        {
+            if(myNode.getLeftNode() == null && myNode.getRightNode() == null)
+            {
+                return null;
+            }
 
-
-        else {
-            if (myNode.getLeftNode() == null)
+            else if(myNode.getLeftNode() == null)
+            {
                 return myNode.getRightNode();
-            else if (myNode.getRightNode() == null)
+            }
+
+            else if(myNode.getRightNode() == null)
+            {
                 return myNode.getLeftNode();
+            }
 
-            myNode.setItem(getMinItem(myNode.getRightNode()).getItem());
-
-            myNode.setRightNode(deleteItem(myNode.getRightNode(), item));
+            else
+            {
+                int rightMin = getMinItem(myNode.getRightNode()).getItem();
+                myNode.setItem(rightMin);
+                myNode.setRightNode(deleteItem(myNode.getRightNode(), rightMin));
+            }
 
         }
 
