@@ -62,23 +62,149 @@ public class MyBST implements BST_Methods{
     }
 
     @Override
-    public MyNode getInOrderSuccessor(int item) {
+    public int getInOrderSuccessor(int item) {
+
+        MyNode myNode = searchNode(item);
+
+        if(myNode != null)
+        {
+            MyNode inorderSuccessor = getInOrderSuccessor(rootNode, myNode);
+
+            if(inorderSuccessor!=null)
+                return inorderSuccessor.getItem();
+            else
+                return Integer.MIN_VALUE;
+        }
+        else
+            return Integer.MIN_VALUE;
+    }
+
+    private MyNode getInOrderSuccessor(MyNode rootDummyNode, MyNode myNode)
+    {
+        if (myNode.getRightNode() != null)
+            return getMinItem(myNode.getRightNode());
+
+        MyNode inorderSuccessor = null;
+
+        while (rootDummyNode != null)
+        {
+            if (myNode.getItem() < rootDummyNode.getItem())
+            {
+                inorderSuccessor = rootDummyNode;
+                rootDummyNode = rootDummyNode.getLeftNode();
+            }
+            else if (myNode.getItem() > rootDummyNode.getItem())
+                rootDummyNode = rootDummyNode.getRightNode();
+            else
+                break;
+        }
+        return inorderSuccessor;
+    }
+
+    private MyNode searchNode(int item)
+    {
+        MyNode currentNode = rootNode;
+
+        while(currentNode != null)
+        {
+            if(item == currentNode.getItem())
+                return currentNode;
+            if(item < currentNode.getItem())
+                currentNode = currentNode.getLeftNode();
+            else
+                currentNode = currentNode.getRightNode();
+        }
+
         return null;
     }
 
     @Override
-    public MyNode getInOrderPredecessor(int item) {
-        return null;
+    public int getInOrderPredecessor(int item) {
+
+        MyNode inOrderPredecessor =  getInOrderPredecessor(rootNode, item);
+
+        if(inOrderPredecessor != null)
+            return inOrderPredecessor.getItem();
+        else
+            return Integer.MIN_VALUE;
+    }
+
+    private MyNode getInOrderPredecessor(MyNode myNode, int item)
+    {
+        MyNode predecessor = null;
+
+        while (true)
+        {
+            if (item < myNode.getItem()) {
+                myNode = myNode.getLeftNode();
+            }
+
+            else if (item > myNode.getItem())
+            {
+                predecessor = myNode;
+                myNode = myNode.getRightNode();
+            }
+            else {
+                if (myNode.getLeftNode() != null) {
+                    predecessor = getMaxItem(myNode.getLeftNode());
+                }
+                break;
+            }
+
+            if (myNode == null) {
+                return null;
+            }
+        }
+
+        return predecessor;
     }
 
     @Override
     public void deleteItem(int item) {
+        rootNode = deleteItem(rootNode, item);
+    }
 
+    private MyNode deleteItem(MyNode myNode, int item)
+    {
+        if (myNode == null)
+            return myNode;
+
+        if (item < myNode.getItem())
+            myNode.setLeftNode(deleteItem(myNode.getLeftNode(), item));
+
+        else if (item > myNode.getItem())
+            myNode.setRightNode(deleteItem(myNode.getRightNode(), item));
+
+
+        else {
+            if (myNode.getLeftNode() == null)
+                return myNode.getRightNode();
+            else if (myNode.getRightNode() == null)
+                return myNode.getLeftNode();
+
+            myNode.setItem(getMinItem(myNode.getRightNode()).getItem());
+
+            myNode.setRightNode(deleteItem(myNode.getRightNode(), item));
+
+        }
+
+        return myNode;
     }
 
     @Override
     public int getItemDepth(int item) {
-        return getItemDepth(item, rootNode, 1);
+
+        int depth = getItemDepth(item, rootNode, 0);
+
+        if(depth == 0 && item == rootNode.getItem())
+            return 0;
+
+        else if(depth == 0 && item!= rootNode.getItem())
+        {
+            return -1;
+        }
+
+        return depth;
     }
 
     private int getItemDepth(int item, MyNode myNode, int depth) {
@@ -101,10 +227,10 @@ public class MyBST implements BST_Methods{
 
     @Override
     public int getMaxItem() {
-        return getMaxItem(rootNode);
+        return getMaxItem(rootNode).getItem();
     }
 
-    private int getMaxItem(MyNode rootNode) {
+    private MyNode getMaxItem(MyNode rootNode) {
 
         MyNode currentNode = rootNode;
 
@@ -112,15 +238,15 @@ public class MyBST implements BST_Methods{
             currentNode = currentNode.getRightNode();
         }
 
-        return (currentNode.getItem());
+        return currentNode;
     }
 
     @Override
     public int getMinItem() {
-        return getMinItem(rootNode);
+        return getMinItem(rootNode).getItem();
     }
 
-    private int getMinItem(MyNode rootNode) {
+    private MyNode getMinItem(MyNode rootNode) {
 
         MyNode currentNode = rootNode;
 
@@ -128,7 +254,7 @@ public class MyBST implements BST_Methods{
             currentNode = currentNode.getLeftNode();
         }
 
-        return (currentNode.getItem());
+        return currentNode;
     }
 
     @Override

@@ -2,18 +2,30 @@ public class BST_Offline {
     public static void main(String[] args) {
         MyBST myBST = new MyBST();
 
-        myBST.insertItem(10);
-        myBST.insertItem(5);
-        myBST.insertItem(17);
-        myBST.insertItem(3);
-        myBST.insertItem(7);
-        myBST.insertItem(12);
-        myBST.insertItem(19);
-        myBST.insertItem(1);
-        myBST.insertItem(4);
-        myBST.insertItem(13);
+        myBST.insertItem(50);
+        myBST.insertItem(30);
+        myBST.insertItem(20);
+        myBST.insertItem(40);
+        myBST.insertItem(70);
+        myBST.insertItem(60);
+        myBST.insertItem(80);
 
-        System.out.println(myBST.getItemDepth(17));
+        myBST.printInOrder();
+
+        myBST.deleteItem(20);
+
+        myBST.printInOrder();
+
+        System.out.println("\nDelete 30");
+
+        myBST.deleteItem(30);
+
+        myBST.printInOrder();
+
+        System.out.println("\nDelete 50");
+        myBST.deleteItem(50);
+        System.out.println("Inorder traversal of the modified tree");
+        myBST.printInOrder();
 
     }
 }
